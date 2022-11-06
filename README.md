@@ -1,4 +1,4 @@
-# Laravel 8 - Expense application
+# Laravel 8 - Expense Manager Application
 
 ## Screenshots
 
@@ -11,7 +11,7 @@
 Clone the project
 
 ```bash
-  git clone https://github.com/abdulaziz-m5u/laravel-expense-app.git project-name
+  git clone https://github.com/cmtimran/ExpenseManager.git ExpenseManager
 ```
 
 Go to the project directory
