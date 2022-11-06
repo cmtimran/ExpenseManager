@@ -43,6 +43,22 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="expense_users">Name</label>
+                                <select name="expense_users" id="" class="form-control" require>
+                                    <!-- <option value="">Select User</option> -->
+                                    @foreach($expense_users as $id => $expense_users)
+                                        <option {{ $expense->user_id == $id ? 'selected' : null }} value="{{ $id }}">{{ $expense_users }}</option>
+                                    @endforeach
+                                </select>
+                                @error('expense_users')<span class="text-danger">{{ $message }}</span>@enderror
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col">
                             <div class="form-group">

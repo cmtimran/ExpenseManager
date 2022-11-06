@@ -35,7 +35,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ Carbon\Carbon::createFromFormat('Y-m-d', $expense->entry_date)->format('d-M-Y') }}</td>
-                            <td>{{ $expense->user_id }} </td>
+                            <td> {!! Str::words($expense->user->name, 1, '') !!} </td>
                             <td><a href="{{ route('admin.expenses.show', $expense) }}">{{ $expense->expense_category->name }}</a></td>
                             <td> {{ $expense->description }} </td>
                             <td>{{ $expense->expense_currency->symbol  . ' ' . number_format($expense->amount, 2, $expense->expense_currency->money_format_decimal, $expense->expense_currency->money_format_thousands) }}</td>

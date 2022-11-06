@@ -7,6 +7,7 @@ use App\Models\ExpenseCategory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ExpenseRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class ExpenseController extends Controller
 {
@@ -17,7 +18,15 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        $expenses = Expense::whereUserId(auth()->id())->latest()->paginate(100);
+        // $data['expenses'] = DB::table('expenses')
+        //     ->join('users', 'expenses.user_id', '=', 'users.id')
+        //     ->select('expenses.*', 'users.name as name')
+        //     ->get()->toArray();
+        // $expenses = Expense::whereUserId(id())->latest()->paginate(100);
+        $expenses = Expense::latest()->paginate(100);
+        //  echo '<pre>';
+        //  print_r($data);
+        //  die;
         return view('admin.expenses.index', compact('expenses'));
     }
 
@@ -30,6 +39,7 @@ class ExpenseController extends Controller
     {
         $expense_categories = ExpenseCategory::get()->pluck('name', 'id');
         $expense_users = User::get()->pluck('name', 'id');
+
 
         return view('admin.expenses.create', compact('expense_categories', 'expense_users'));
     }
@@ -73,8 +83,9 @@ class ExpenseController extends Controller
     public function edit(Expense $expense)
     {
         $expense_categories = ExpenseCategory::get()->pluck('name', 'id')->prepend('Please Select');
+        $expense_users = User::get()->pluck('name', 'id');
 
-        return view('admin.expenses.edit', compact('expense', 'expense_categories'));
+        return view('admin.expenses.edit', compact('expense', 'expense_categories', 'expense_users'));
     }
 
     /**
