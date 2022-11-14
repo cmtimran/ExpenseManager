@@ -18,15 +18,7 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        // $data['expenses'] = DB::table('expenses')
-        //     ->join('users', 'expenses.user_id', '=', 'users.id')
-        //     ->select('expenses.*', 'users.name as name')
-        //     ->get()->toArray();
-        // $expenses = Expense::whereUserId(id())->latest()->paginate(100);
         $expenses = Expense::latest()->paginate(100);
-        //  echo '<pre>';
-        //  print_r($data);
-        //  die;
         return view('admin.expenses.index', compact('expenses'));
     }
 
@@ -52,8 +44,9 @@ class ExpenseController extends Controller
      */
     public function store(ExpenseRequest $request)
     {
+        // dd($request->all());
         Expense::create($request->validated() + [
-                'user_id' => auth()->id(),
+                'user_id' => $request->name,
                 'currency_id' => auth()->user()->currency_id,
             ]);
 
@@ -84,7 +77,6 @@ class ExpenseController extends Controller
     {
         $expense_categories = ExpenseCategory::get()->pluck('name', 'id')->prepend('Please Select');
         $expense_users = User::get()->pluck('name', 'id');
-
         return view('admin.expenses.edit', compact('expense', 'expense_categories', 'expense_users'));
     }
 
@@ -98,7 +90,7 @@ class ExpenseController extends Controller
     public function update(ExpenseRequest $request,Expense $expense)
     {
         $expense->update($request->validated() + [
-                'user_id' => auth()->id(),
+                'user_id' =>$request->expense_users,
                 'currency_id' => auth()->user()->currency_id,
             ]);
 

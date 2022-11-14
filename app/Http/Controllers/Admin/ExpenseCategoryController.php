@@ -38,7 +38,7 @@ class ExpenseCategoryController extends Controller
      */
     public function store(ExpenseCategoryRequest $request)
     {
-        ExpenseCategory::create($request->validated() + ['user_id' => auth()->id()]);
+        ExpenseCategory::create($request->validated() + ['user_id' => $request->name]);
 
         return redirect()->route('admin.expense_categories.index')->with([
             'message' => 'Success Created !',
@@ -77,7 +77,7 @@ class ExpenseCategoryController extends Controller
      */
     public function update(ExpenseCategoryRequest $request,ExpenseCategory $expense_category)
     {
-        $expense_category->update($request->validated() + ['user_id' => auth()->id()]);
+        $expense_category->update($request->validated() + ['user_id' => $request->name]);
 
         return redirect()->route('admin.expense_categories.index')->with([
             'message' => 'Success Updated !',
